@@ -1,6 +1,8 @@
 # a11y-triage-agent
 Routing agent for automated accessibility testing
 
+![CI](https://github.com/judithhinlung/a11y-triage-agent/actions/workflows/ci.yml/badge.svg)
+
 
 ## Project Roles
 This project is built by Judith Lung with the assistance of Claude-sonnet-4.6. Judith serves as the Product Owner, Scrum Maaster, and Engineer for this project.
