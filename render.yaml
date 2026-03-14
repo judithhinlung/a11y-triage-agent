@@ -14,6 +14,7 @@ services:
   - type: web
     name: a11y-frontend
     runtime: static
+    plan: free
     rootDir: .
     buildCommand: npm ci && npx turbo build --filter=@a11y/frontend
     staticPublishPath: packages/frontend/dist
@@ -33,6 +34,7 @@ services:
   - type: web
     name: a11y-crawler-service
     runtime: node
+    plan: free
     rootDir: .
     buildCommand: npm ci && npx playwright install --with-deps chromium && npx turbo build --filter=@a11y/crawler-service
     startCommand: node packages/crawler-service/dist/index.js
@@ -58,6 +60,7 @@ services:
   - type: web
     name: a11y-scanner-service
     runtime: python
+    plan: free
     rootDir: packages/scanner-service
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -80,6 +83,7 @@ services:
   - type: web
     name: a11y-report-service
     runtime: python
+    plan: free
     rootDir: packages/report-service
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -97,6 +101,7 @@ services:
   - type: web
     name: a11y-llm-service
     runtime: python
+    plan: free
     rootDir: packages/llm-service
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -114,6 +119,7 @@ services:
   - type: web
     name: a11y-ml-service
     runtime: python
+    plan: free
     rootDir: packages/ml-service
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
