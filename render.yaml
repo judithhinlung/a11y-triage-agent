@@ -132,3 +132,4 @@ services:
     name: a11y-redis
     plan: starter
     maxmemoryPolicy: noeviction
+    ipAllowList: []
