@@ -14,7 +14,6 @@ services:
   - type: web
     name: a11y-frontend
     runtime: static
-    plan: free
     rootDir: .
     buildCommand: npm ci && npx turbo build --filter=@a11y/frontend
     staticPublishPath: packages/frontend/dist
