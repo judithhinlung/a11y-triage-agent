@@ -1,0 +1,2 @@
+npx tsc --build --noEmit
+npx eslint .
