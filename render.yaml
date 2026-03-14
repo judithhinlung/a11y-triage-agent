@@ -1,0 +1,105 @@
+services:
+  # ------------------------------------------------------------------
+  # Frontend — React/Vite static site
+  # ------------------------------------------------------------------
+  - type: web
+    name: a11y-frontend
+    runtime: static
+rootDir: .
+    buildCommand: npm ci && npx turbo build --filter=@a11y/frontend
+    staticPublishPath: packages/frontend/dist
+    pullRequestPreviewsEnabled: true
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+  # ------------------------------------------------------------------
+  # Crawler Service — Node.js/Express + Playwright + BullMQ
+  # ------------------------------------------------------------------
+  - type: web
+    name: a11y-crawler-service
+    runtime: node
+    rootDir: .
+    buildCommand: npm ci && npx playwright install --with-deps chromium && npx turbo build --filter=@a11y/crawler-service
+    startCommand: node packages/crawler-service/dist/index.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: REDIS_URL
+        fromService:
+          name: a11y-redis
+          type: redis
+          property: connectionString
+
+  # ------------------------------------------------------------------
+  # Scanner Service — Python (placeholder, not yet implemented)
+  # ------------------------------------------------------------------
+  - type: web
+    name: a11y-scanner-service
+    runtime: python
+    rootDir: packages/scanner-service
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PORT
+        value: 8001
+      - key: REDIS_URL
+        fromService:
+          name: a11y-redis
+          type: redis
+          property: connectionString
+
+  # ------------------------------------------------------------------
+  # Report Service — Python (placeholder, not yet implemented)
+  # ------------------------------------------------------------------
+  - type: web
+    name: a11y-report-service
+    runtime: python
+    rootDir: packages/report-service
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PORT
+        value: 8002
+
+  # ------------------------------------------------------------------
+  # LLM Service — Python (placeholder, not yet implemented)
+  # ------------------------------------------------------------------
+  - type: web
+    name: a11y-llm-service
+    runtime: python
+    rootDir: packages/llm-service
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PORT
+        value: 8003
+
+  # ------------------------------------------------------------------
+  # ML Service — Python (placeholder, not yet implemented)
+  # ------------------------------------------------------------------
+  - type: web
+    name: a11y-ml-service
+    runtime: python
+    rootDir: packages/ml-service
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PORT
+        value: 8004
+
+  # ------------------------------------------------------------------
+  # Redis — required by BullMQ job queue in crawler-service
+  # ------------------------------------------------------------------
+  - type: redis
+    name: a11y-redis
+    plan: starter
+    maxmemoryPolicy: noeviction
