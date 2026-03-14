@@ -1,3 +1,12 @@
+databases:
+  # ------------------------------------------------------------------
+  # PostgreSQL — shared database for all backend services
+  # ------------------------------------------------------------------
+  - name: a11y-db
+    plan: free
+    databaseName: a11y
+    user: a11y_user
+
 services:
   # ------------------------------------------------------------------
   # Frontend — React/Vite static site
@@ -5,7 +14,7 @@ services:
   - type: web
     name: a11y-frontend
     runtime: static
-rootDir: .
+    rootDir: .
     buildCommand: npm ci && npx turbo build --filter=@a11y/frontend
     staticPublishPath: packages/frontend/dist
     pullRequestPreviewsEnabled: true
@@ -38,6 +47,10 @@ rootDir: .
           name: a11y-redis
           type: redis
           property: connectionString
+      - key: DATABASE_URL
+        fromDatabase:
+          name: a11y-db
+          property: connectionString
 
   # ------------------------------------------------------------------
   # Scanner Service — Python (placeholder, not yet implemented)
@@ -56,6 +69,10 @@ rootDir: .
           name: a11y-redis
           type: redis
           property: connectionString
+      - key: DATABASE_URL
+        fromDatabase:
+          name: a11y-db
+          property: connectionString
 
   # ------------------------------------------------------------------
   # Report Service — Python (placeholder, not yet implemented)
@@ -69,6 +86,10 @@ rootDir: .
     envVars:
       - key: PORT
         value: 8002
+      - key: DATABASE_URL
+        fromDatabase:
+          name: a11y-db
+          property: connectionString
 
   # ------------------------------------------------------------------
   # LLM Service — Python (placeholder, not yet implemented)
@@ -82,6 +103,10 @@ rootDir: .
     envVars:
       - key: PORT
         value: 8003
+      - key: DATABASE_URL
+        fromDatabase:
+          name: a11y-db
+          property: connectionString
 
   # ------------------------------------------------------------------
   # ML Service — Python (placeholder, not yet implemented)
@@ -95,6 +120,10 @@ rootDir: .
     envVars:
       - key: PORT
         value: 8004
+      - key: DATABASE_URL
+        fromDatabase:
+          name: a11y-db
+          property: connectionString
 
   # ------------------------------------------------------------------
   # Redis — required by BullMQ job queue in crawler-service
