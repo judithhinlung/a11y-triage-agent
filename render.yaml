@@ -130,6 +130,6 @@ services:
   # ------------------------------------------------------------------
   - type: redis
     name: a11y-redis
-    plan: starter
+    plan: free
     maxmemoryPolicy: noeviction
     ipAllowList: []

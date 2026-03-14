@@ -1,2 +1,2 @@
-npx tsc --build --noEmit
+npx tsc --build
 npx eslint .
