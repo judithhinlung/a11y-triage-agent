@@ -54,16 +54,19 @@ services:
           property: connectionString
 
   # ------------------------------------------------------------------
-  # Scanner Service — Python (placeholder, not yet implemented)
+  # Scanner Service — Node.js/Express
   # ------------------------------------------------------------------
   - type: web
     name: a11y-scanner-service
-    runtime: python
+    runtime: node
     plan: free
-    rootDir: packages/scanner-service
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    rootDir: .
+    buildCommand: npm ci && npx turbo build --filter=@a11y/scanner-service
+    startCommand: node packages/scanner-service/dist/index.js
+    healthCheckPath: /health
     envVars:
+      - key: NODE_ENV
+        value: production
       - key: PORT
         value: 8001
       - key: REDIS_URL
@@ -77,16 +80,19 @@ services:
           property: connectionString
 
   # ------------------------------------------------------------------
-  # Report Service — Python (placeholder, not yet implemented)
+  # Report Service — Node.js/Express
   # ------------------------------------------------------------------
   - type: web
     name: a11y-report-service
-    runtime: python
+    runtime: node
     plan: free
-    rootDir: packages/report-service
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    rootDir: .
+    buildCommand: npm ci && npx turbo build --filter=@a11y/report-service
+    startCommand: node packages/report-service/dist/index.js
+    healthCheckPath: /health
     envVars:
+      - key: NODE_ENV
+        value: production
       - key: PORT
         value: 8002
       - key: DATABASE_URL
@@ -95,16 +101,19 @@ services:
           property: connectionString
 
   # ------------------------------------------------------------------
-  # LLM Service — Python (placeholder, not yet implemented)
+  # LLM Service — Node.js/Express
   # ------------------------------------------------------------------
   - type: web
     name: a11y-llm-service
-    runtime: python
+    runtime: node
     plan: free
-    rootDir: packages/llm-service
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    rootDir: .
+    buildCommand: npm ci && npx turbo build --filter=@a11y/llm-service
+    startCommand: node packages/llm-service/dist/index.js
+    healthCheckPath: /health
     envVars:
+      - key: NODE_ENV
+        value: production
       - key: PORT
         value: 8003
       - key: DATABASE_URL
