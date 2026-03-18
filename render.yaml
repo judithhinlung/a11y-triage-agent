@@ -12,7 +12,7 @@ services:
   # Frontend — React/Vite static site
   # ------------------------------------------------------------------
   - type: web
-    name: a11y-frontend
+    name: a11y-triage-agent
     runtime: static
     rootDir: .
     buildCommand: npm ci && npx turbo build --filter=@a11y/frontend
