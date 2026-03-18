@@ -35,7 +35,7 @@ services:
     runtime: node
     plan: free
     rootDir: .
-    buildCommand: npm ci && npx playwright install chromium && npx turbo build --filter=@a11y/crawler-service
+    buildCommand: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci && npx playwright install chromium && npx turbo build --filter=@a11y/crawler-service
     startCommand: node packages/crawler-service/dist/index.js
     healthCheckPath: /health
     envVars:
