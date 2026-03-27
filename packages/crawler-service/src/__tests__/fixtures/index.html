@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Fixture Home</title></head>
+<body>
+  <h1>Home</h1>
+  <nav>
+    <a href="/page-a">Page A</a>
+    <a href="/page-b">Page B</a>
+    <!-- This page does not exist on the server — should produce a 404 -->
+    <a href="/missing">Missing Page</a>
+    <!-- External link — must not be followed -->
+    <a href="https://external.example.com/page">External</a>
+    <!-- Non-HTTP links — must be filtered out -->
+    <a href="mailto:test@example.com">Email</a>
+    <a href="tel:+15551234567">Phone</a>
+    <!-- Hash-only link — deduplicates to this page -->
+    <a href="#section">Section</a>
+  </nav>
+</body>
+</html>

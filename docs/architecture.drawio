@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  a11y-triage-agent — System Architecture
+  Open at: https://app.diagrams.net  →  File → Open from → Device
+-->
+<mxfile host="app.diagrams.net" modified="2026-03-24T00:00:00.000Z" agent="Claude Code" version="21.0.0" type="device">
+  <diagram name="System Architecture" id="arch-001">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1"
+                  connect="1" arrows="1" fold="1" page="1" pageScale="1"
+                  pageWidth="1654" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ═══════════════════════════════════════════════
+             Deployment boundary — Render.com
+             (dashed amber box around all hosted services)
+             ═══════════════════════════════════════════════ -->
+        <mxCell id="render-bg" value=""
+          style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#d6b656;strokeWidth=2;dashed=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="200" y="60" width="920" height="370" as="geometry"/>
+        </mxCell>
+        <mxCell id="render-label" value="Render.com"
+          style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;fontSize=13;fontStyle=1;fontColor=#d6b656;"
+          vertex="1" parent="1">
+          <mxGeometry x="206" y="65" width="140" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════
+             ROW 1 — User Interaction / API
+             ═══════════════════════════════ -->
+
+        <!-- User (Browser) — outside Render -->
+        <mxCell id="user" value="User&#xa;(Browser)"
+          style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;"
+          vertex="1" parent="1">
+          <mxGeometry x="50" y="110" width="120" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Frontend (React SPA) -->
+        <mxCell id="frontend" value="&lt;b&gt;Frontend&lt;/b&gt;&#xa;React SPA"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;"
+          vertex="1" parent="1">
+          <mxGeometry x="220" y="110" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Report Service -->
+        <mxCell id="report-svc" value="&lt;b&gt;Report Service&lt;/b&gt;&#xa;Node.js / Express"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;"
+          vertex="1" parent="1">
+          <mxGeometry x="480" y="110" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- PostgreSQL (cylinder) -->
+        <mxCell id="postgres" value="&lt;b&gt;PostgreSQL&lt;/b&gt;&#xa;reports + results"
+          style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;"
+          vertex="1" parent="1">
+          <mxGeometry x="750" y="100" width="150" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════
+             ROW 2 — Processing Pipeline
+             ═══════════════════════════════ -->
+
+        <!-- Crawler Service -->
+        <mxCell id="crawler-svc" value="&lt;b&gt;Crawler Service&lt;/b&gt;&#xa;Node.js + Playwright"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;"
+          vertex="1" parent="1">
+          <mxGeometry x="220" y="300" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Redis / BullMQ (cylinder) -->
+        <mxCell id="redis" value="&lt;b&gt;Redis&lt;/b&gt;&#xa;BullMQ Job Queue"
+          style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;"
+          vertex="1" parent="1">
+          <mxGeometry x="460" y="285" width="140" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Scanner Service -->
+        <mxCell id="scanner-svc" value="&lt;b&gt;Scanner Service&lt;/b&gt;&#xa;Node.js + axe-core"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=12;"
+          vertex="1" parent="1">
+          <mxGeometry x="680" y="300" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- LLM Service -->
+        <mxCell id="llm-svc" value="&lt;b&gt;LLM Service&lt;/b&gt;&#xa;Node.js / Express"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;"
+          vertex="1" parent="1">
+          <mxGeometry x="900" y="300" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Claude API — external (outside Render boundary) -->
+        <mxCell id="claude-api" value="&lt;b&gt;Claude API&lt;/b&gt;&#xa;Anthropic (external)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=12;dashed=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="1160" y="300" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- @a11y/shared-types note -->
+        <mxCell id="shared-types"
+          value="@a11y/shared-types&#xa;(npm workspace)&#xa;CrawlJob · ScanResult&#xa;TriageResult"
+          style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=center;verticalAlign=middle;fontSize=10;rounded=1;dashed=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="50" y="295" width="140" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════════════
+             EDGES / ARROWS
+             ═══════════════ -->
+
+        <!-- e1: User → Frontend (HTTP/S) -->
+        <mxCell id="e1" value="HTTP/S"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;"
+          edge="1" source="user" target="frontend" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- e2: Frontend ↔ Report Service (REST API, bidirectional) -->
+        <mxCell id="e2" value="REST API&#xa;submit / poll"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;startArrow=block;startFill=1;endArrow=block;endFill=1;fontSize=11;"
+          edge="1" source="frontend" target="report-svc" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- e3: Report Service ↔ PostgreSQL (read/write, bidirectional) -->
+        <mxCell id="e3" value="read / write"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;startArrow=block;startFill=1;endArrow=block;endFill=1;fontSize=11;"
+          edge="1" source="report-svc" target="postgres" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- e4: Report Service → Crawler Service
+             Route: exit Report bottom-left → y=240 → x=300 → Crawler top -->
+        <mxCell id="e4" value="trigger crawl"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;"
+          edge="1" source="report-svc" target="crawler-svc" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="240"/>
+              <mxPoint x="300" y="240"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- e5: Crawler Service → Redis/BullMQ (enqueue) -->
+        <mxCell id="e5" value="enqueue page jobs"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;"
+          edge="1" source="crawler-svc" target="redis" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- e6: Redis/BullMQ → Scanner Service (dequeue) -->
+        <mxCell id="e6" value="dequeue"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;"
+          edge="1" source="redis" target="scanner-svc" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- e7: Scanner Service ↔ LLM Service (violations / triage, bidirectional) -->
+        <mxCell id="e7" value="violations →&#xa;← triage"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;startArrow=block;startFill=1;endArrow=block;endFill=1;fontSize=11;"
+          edge="1" source="scanner-svc" target="llm-svc" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- e8: LLM Service → Claude API (dashed — crosses Render boundary) -->
+        <mxCell id="e8" value="Claude API call"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;dashed=1;"
+          edge="1" source="llm-svc" target="claude-api" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- e9: Scanner Service → Report Service (scan + triage results)
+             Route: exit Scanner top → y=240 → Report bottom-right -->
+        <mxCell id="e9" value="scan + triage results"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=11;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;"
+          edge="1" source="scanner-svc" target="report-svc" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="760" y="240"/>
+              <mxPoint x="640" y="240"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- GitHub Actions CI/CD note -->
+        <mxCell id="ci-note"
+          value="GitHub Actions CI/CD&#xa;push to main → Render deploy hook"
+          style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=11;fontStyle=2;fontColor=#888888;"
+          vertex="1" parent="1">
+          <mxGeometry x="230" y="455" width="320" height="36" as="geometry"/>
+        </mxCell>
+
+        <!-- ══════════════
+             LEGEND
+             ══════════════ -->
+        <mxCell id="legend-bg" value=""
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#cccccc;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="50" y="430" width="140" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend-title" value="&lt;b&gt;Legend&lt;/b&gt;"
+          style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=11;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="50" y="434" width="140" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg-blue" value="Frontend / DB"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;"
+          vertex="1" parent="1">
+          <mxGeometry x="60" y="460" width="120" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg-green" value="Orchestration"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;"
+          vertex="1" parent="1">
+          <mxGeometry x="60" y="488" width="120" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg-orange" value="Processing"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;fontSize=10;"
+          vertex="1" parent="1">
+          <mxGeometry x="60" y="516" width="120" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg-purple" value="LLM / AI"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;"
+          vertex="1" parent="1">
+          <mxGeometry x="60" y="544" width="120" height="22" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
